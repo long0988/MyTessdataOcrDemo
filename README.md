@@ -1,0 +1,2 @@
+# MyTessdataOcrDemo
+使用Tessdata进行文字识别demo
