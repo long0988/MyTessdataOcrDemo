@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
+    <!-- 这个下载路径不可以修改，必须是 GDTDOWNLOAD -->
+    <external-path
+        name="gdt_sdk_download_path"
+        path="GDTDOWNLOAD" />
+    <root-path
+        name="camera_photos"
+        path="" />
+    <!--<external-files-path-->
+    <!--name="my_images"-->
+    <!--path="Pictures" />-->
+    <!--
+    <files-path/>代表的根目录： Context.getFilesDir()
+    <cache-path/>代表的根目录: getCacheDir()
+    <external-path/>代表的根目录: Environment.getExternalStorageDirectory()
+    <external-files-path/>代表的根目录: Context.getExternalFilesDir(String) Context.getExternalFilesDir(null).
+    <external-cache-path />代表的根目录: Context.getExternalCacheDir().
+    <root-path />代表设备的根目录new File("/");
+    -->
+    <!-- path=""代表根目录，也可以指定特定目录，name="camera_picture"是虚拟目录camera_picture -->
+
+    <!--<files-path name="" path="."/>-->
+</paths>

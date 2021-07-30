@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="PSM_TYPE">
+        <item>PSM_OSD_ONLY</item>
+        <item>PSM_AUTO_OSD </item>
+        <item>PSM_AUTO_ONLY</item>
+        <item>PSM_AUTO</item>
+        <item>PSM_SINGLE_COLUMN</item>
+        <item>PSM_SINGLE_BLOCK_VERT_TEXT</item>
+        <item>PSM_SINGLE_BLOCK</item>
+        <item>PSM_SINGLE_LINE</item>
+        <item>PSM_SINGLE_WORD</item>
+        <item>PSM_CIRCLE_WORD</item>
+        <item>PSM_SINGLE_CHAR</item>
+        <item>PSM_SPARSE_TEXT</item>
+        <item>PSM_SPARSE_TEXT_OSD</item>
+        <item>PSM_RAW_LINE</item>
+    </string-array>
+</resources>
