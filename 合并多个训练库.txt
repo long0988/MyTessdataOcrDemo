@@ -1,0 +1,56 @@
+1.前期准备工作，此使用说明只举例合并两个训练库的流程：
+
+    需要生成的字符集 .tif文件，位置文件 .box文件
+    例如上一步的文件：skygz.test.exp0.tif  skygz.test.exp0.box
+
+2、先生成相对应的 .tr 文件（如果你之前训练的.tr 有的话，可以忽略这步）
+
+     命令如：
+             第一个：tesseract skygz.test.exp0.tif  skygz.test.exp0 nobatch box.train
+             第二个：tesseract skygz.test.exp1.tif  skygz.test.exp1 nobatch box.train
+
+3、生成font_properties生成字体特征文件：（该文件没有后缀名），test必须与上一步文件test的名字一样
+     运行命令：echo test 0 0 0 0 0 >font_properties
+
+4、生成字符集文件，从所有文件中提取字符：
+       命令如：unicharset_extractor skygz.test.exp0.box skygz.test.exp1.box
+
+5、生成shape文件（该步骤可省略）：
+      命令如：shapeclustering -F font_properties -U unicharset skygz.test.exp0.tr  skygz.test.exp1.tr
+
+6、生成聚字符特征文件：
+    命令如：mftraining -F font_properties -U unicharset  skygz.test.exp0.tr  skygz.test.exp1.tr
+
+7、聚集所有.tr 文件，生成字符正常化特征文件：
+    命令如：cntraining skygz.test.exp0.tr skygz.test.exp1.tr
+
+8、文件重命名：
+      重新命名inttemp、pffmtable、shapetable和normproto这四个文件的名字为[lang].xxx。
+     
+   执行下面命令：
+
+   rename normproto skygz.normproto
+
+   rename inttemp skygz.inttemp
+
+   rename pffmtable skygz.pffmtable
+
+   rename shapetable skygz.shapetable
+
+   rename unicharset skygz.unicharset
+
+9、合并训练文件：
+      执行下面命令，会生成skygz.traineddata文件
+
+      执行命令： combine_tessdata skygz.
+
+10、windows执行识别命令，识别出训练结果
+     
+     命令解析 ：tesseract 图片地址 识别后输出文件 -l (指定识别训练库的前缀)  --psm 7（表示将图片当作一行识别） 如下：
+
+     tesseract 1.png output_sim -l skygz --psm 7
+     tesseract 1.png output_sim -l skygz
+
+tesseract simplechinese4.png output_sim -l skygz --psm 7
+
+tesseract simplechinese4.png output_sim -l skygz

@@ -15,5 +15,6 @@
         <item>PSM_SPARSE_TEXT</item>
         <item>PSM_SPARSE_TEXT_OSD</item>
         <item>PSM_RAW_LINE</item>
+        <item>none</item>
     </string-array>
 </resources>

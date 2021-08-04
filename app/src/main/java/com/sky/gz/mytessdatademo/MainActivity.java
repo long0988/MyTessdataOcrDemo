@@ -30,17 +30,19 @@ import com.sky.gz.mytessdatademo.utils.ThreadManager;
 
 public class MainActivity extends AppCompatActivity {
     static final String DEST_PATH = "tessdata";
-    static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().toString() + "/sky/";
+    static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().toString();
     //识别语言英文
     static final String DEFAULT_LANGUAGE = "eng";
     //识别语言简体中文
     static final String CHINESE_LANGUAGE = "chi_sim";
+    //自定义训练库
+    static final String CHINESE_SKYGZ = "skygz";
 
     private static final int REQUEST_CODE_GENERAL_BASIC = 106;
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1007;
     private TextView mTvInfo;
     private ImageView mImageview;
-    private int mPsmType = 7;
+    private int mPsmType = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int pos, long id) {
-                mPsmType = pos;
+                if(pos==14){
+                    mPsmType = -1;
+                }else {
+                    mPsmType = pos;
+                }
+
+                Log.e("eeeeeeeeeeeee", "pos=========" + pos+"===mPsmType======" + mPsmType);
                 String[] languages = getResources().getStringArray(R.array.PSM_TYPE);
                 Toast.makeText(MainActivity.this, "你点击的是:" + languages[pos], Toast.LENGTH_SHORT).show();
             }
@@ -63,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 // Another interface callback
             }
         });
-        spinner.setSelection(mPsmType);
+//        spinner.setSelection(mPsmType);
         requestPermission();
 
     }
@@ -128,13 +136,41 @@ public class MainActivity extends AppCompatActivity {
         try {
             TessBaseAPI tessBaseAPI = new TessBaseAPI();
             //初始化OCR的训练数据路径与语言
-            tessBaseAPI.init(TESSBASE_PATH, CHINESE_LANGUAGE);
+            tessBaseAPI.init(TESSBASE_PATH, CHINESE_SKYGZ);
             // 识别黑名单
 //            tessBaseAPI.setVariable(TessBaseAPI.VAR_CHAR_BLACKLIST, "!@#$%^&*()_+=÷-[]}{;:'\"\\|~`," +
 //                    "./<>?" + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
 //            bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
             //设置识别模式
-            tessBaseAPI.setPageSegMode(mPsmType);
+            if (mPsmType == 0) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_OSD_ONLY);
+            } else if (mPsmType == 1) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO_OSD);
+            } else if (mPsmType == 2) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO_ONLY);
+            } else if (mPsmType == 3) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+            } else if (mPsmType == 4) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_COLUMN);
+            } else if (mPsmType == 5) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_BLOCK_VERT_TEXT);
+            } else if (mPsmType == 6) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_BLOCK);
+            } else if (mPsmType == 7) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+            } else if (mPsmType == 8) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_WORD);
+            } else if (mPsmType == 9) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_CIRCLE_WORD);
+            } else if (mPsmType == 10) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_CHAR);
+            } else if (mPsmType == 11) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SPARSE_TEXT);
+            } else if (mPsmType == 12) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SPARSE_TEXT_OSD);
+            } else if (mPsmType == 13) {
+                tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_RAW_LINE);
+            }
             //设置要识别的图片
             tessBaseAPI.setImage(bitmap);
             retStr = tessBaseAPI.getUTF8Text();
